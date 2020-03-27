@@ -1,0 +1,40 @@
+---
+
+- name: Install Java
+  get_url:
+    url: "{{ java_url }}" 
+    dest: /tmp/
+
+- name: Untar Java tar file
+  unarchive:
+     scr: /tmp/openjdk-12.0.1_linux-x64_bin.tar.gz
+     dest: /tmp/
+
+- name: Move the jdk to the followning location
+  command: mv /tmp/jdk-12.0.1 /usr/lib/jvm
+
+
+- name: Install Kafka tar file
+  get_url:
+    url: "{{ kafka-url }}"
+    dest: /tmp/
+
+- name: Untar the kafka 
+  unarchive:
+    src: /tmp/kafka_2.12-2.3.0.tgz
+    dest: /tmp/
+
+- name: Move the kafka to the followning location
+  command: mv /tmp/kafka_2.12-2.3.0 /usr/lib/
+
+- name: Change the directory 
+  command:
+    chdir: /usr/lib/kafka_2.12-2.3.0
+
+- name: start the zookeeper service
+  command: bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
+  become: yes
+
+- name: start the kafka service
+  command: bin/kafka-server-start.sh -daemon config/server.properties
+  become: yes
