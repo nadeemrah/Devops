@@ -1,0 +1,5 @@
+---
+# vars file for mongotest
+sec_mongo_hostname: "192.168.2.48:27017"
+arbiter_mongo_hostname: "192.168.2.250:27017"
+Replicaset: "turtlemint_new"

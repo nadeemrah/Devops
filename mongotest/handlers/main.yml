@@ -1,0 +1,14 @@
+---
+# handlers file for mongotest
+
+- name: stop mongod
+  become: yes
+  service:
+    name: mongod
+    state: stopped
+
+- name: start mongod
+  become: yes
+  service:
+    name: mongod
+    state: started

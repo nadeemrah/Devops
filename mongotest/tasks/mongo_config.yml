@@ -1,0 +1,48 @@
+#- name: Uncomment line from mongod.conf
+#  lineinfile:
+#    path: /etc/mongod.conf
+#    regexp: '^#\s*replication:'
+#    line: 'replication:'
+#  become: yes
+#
+#- name: Change from mongod.conf
+#  lineinfile:
+#    path: /etc/mongod.conf
+#    regexp: '^\s*bindIp: 127.0.0.1'
+#    line: '   bindIp: 0.0.0.0'
+#  become: yes
+#
+#
+#- name: Uncomment line from mongod.conf
+#  lineinfile:  
+#    path: /etc/mongod.conf
+#    line: '   replSetName: rs0'
+#    insertafter: replication
+#  become: yes
+#  notify: start mongod
+
+- name: Copy mongodb
+  template:
+    src:  mongod.j2
+    dest: /etc/mongod.conf
+    mode: '0644'
+  become: yes
+
+#- name: Copy mongodb-key 
+#  become: yes
+#  copy:
+#    src:  mongodb-keyfile
+#    dest: /etc/mongodb-keyfile
+#    owner: mongodb
+#    group: mongodb
+#    mode: '0700'
+
+- name: start mongod
+  become: yes
+  shell:
+    cmd: service mongod start
+ 
+
+  
+
+

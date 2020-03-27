@@ -1,0 +1,40 @@
+---
+
+- name: Install rabbitmq
+  shell:
+     cmd: "{{ item }}"
+  with_items:
+      - wget -O - "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey" | sudo apt-key add -
+  become: yes
+
+- name: Run a script with arguments (free form)
+  script: script.sh
+
+#- name: Install rabbitmq 
+#  shell:
+#     cmd: "{{ item }}"
+#  with_items:
+#      - wget -O - "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey" | sudo apt-key add -
+#      - apt-get update -y
+#      - apt-get install curl gnupg -y
+#      - curl -fsSL https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc | sudo apt-key add -
+#      - apt-get install apt-transport-https  
+#  become: yes
+#
+#- name: Add repo for rabbitmq
+#  apt_repository:
+#      repo: "{{ item }}"
+#      state: present
+#      filename: bintray.rabbitmq.list
+#  with_items:
+#      - deb https://dl.bintray.com/rabbitmq-erlang/debian bionic erlang
+#      - deb https://dl.bintray.com/rabbitmq/debian bionic main
+#  become: yes
+#
+#- name: Run the following
+#  shell:
+#      cmd: "{{ item }}"
+#  with_items:
+#      - apt-get update -y
+#      - apt-get install rabbitmq-server -y --fix-missing
+#  become: yes

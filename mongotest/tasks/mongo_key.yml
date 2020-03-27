@@ -1,0 +1,41 @@
+---
+
+- name: Add an apt key by id from a keyserver
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 0C49F3730359A14518585931BC711F9BA15703C6
+  become: yes
+
+#- apt_repository:
+#    repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse
+#    state: present
+#  become: yes
+
+#- name: add mongodb apt-key
+#  shell: apt-key adv — keyserver hkp://keyserver.ubuntu.com:80 — recv EA312927
+#  become: yes
+#
+- name: add mongodb apt repository
+  apt_repository: 
+    repo: 'deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse' 
+    state: present 
+    filename: mongodb-org-3.4
+    update_cache: yes
+  become: yes
+
+- name: Update repositories cache 
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Install mongodb
+  become: yes
+  apt:
+    name: mongodb-org*
+    force: yes
+    state: present
+
+- name: stop mongod
+  become: yes
+  shell:
+    cmd: service mongod stop

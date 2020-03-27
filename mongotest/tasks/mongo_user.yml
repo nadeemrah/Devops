@@ -1,0 +1,18 @@
+---
+#- mongodb_user:
+#    database: admin
+#    name: admin
+#    replica_set: mintpro-new
+#    password: 12345
+#    roles: readWriteAnyDatabase
+#    state: present
+
+- name: Create file to initiate replica set
+  template:
+    src: user.j2
+    dest: ./user.js
+    mode: '0755'
+  become: yes
+
+- name: Initialize the replica set
+  command: mongo ./user.js  

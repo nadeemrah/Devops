@@ -1,0 +1,39 @@
+---
+
+#- name: Create a open ssl 
+#  shell:
+#     cmd: openssl rand -base64 756 > {{ path }}
+#  become: yes
+
+#- name: Change file ownership, group and permissions
+#  file:
+#    path: /etc/mongodb-keyfile
+#    owner: mongodb
+#    group: mongodb
+#    mode: '0400'
+#  become: yes
+
+- name: Copy mongodb-key 
+  become: yes
+  copy:
+    src:  mongodb-keyfile
+    dest: /etc/mongodb-keyfile
+    owner: mongodb
+    group: mongodb
+    mode: '0700'
+
+- name: Copy mongodb
+  template:
+    src:  mongodb.j2
+    dest: /etc/mongod.conf
+    mode: '0644'
+  become: yes
+
+- name: Restart service mongod, in all cases
+  service:
+    name: mongod
+    state: restarted
+  become: yes
+
+  
+

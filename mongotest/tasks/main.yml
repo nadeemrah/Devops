@@ -1,0 +1,9 @@
+---
+# tasks file for mongotest
+- include: mongo_key.yml
+- include: mongo_config.yml
+- include: mongo_replicaset.yml
+  when: "'primary' in {{group_names}}"
+- include: mongo_user.yml
+  when: "'primary' in {{group_names}}"
+- include: mongo_openssl.yml

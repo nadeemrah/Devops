@@ -1,0 +1,5 @@
+rs.initiate()
+rs.add('{{sec_mongo_hostname}}')
+rs.addArb('{{arbiter_mongo_hostname}}')
+printjson(rs.status())
+
